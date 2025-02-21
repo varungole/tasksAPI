@@ -33,7 +33,6 @@ public class ConfigLoader {
       if(result.succeeded()) {
         promise.complete(result.result());
       } else {
-        System.out.println("Failed to load configuration" + result.cause().getMessage());
         promise.fail(result.cause());
       }
     });

@@ -20,5 +20,6 @@ public class VertxConstants {
   public static final String TASK_NOT_FOUND = "Task not found";
   public static final String HTTP = "http";
   public static final String PORT = "port";
+  public static final Integer DEFAULT_PORT = 8080;
 
 }

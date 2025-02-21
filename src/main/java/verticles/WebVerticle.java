@@ -28,15 +28,13 @@ public class WebVerticle extends AbstractVerticle {
   Future<HttpServer> startHttpServer(Router router) {
     Promise<HttpServer> promise = Promise.promise();
     JsonObject http = loadedConfig.getJsonObject(VertxConstants.HTTP);
-    int httpPort = http != null ? http.getInteger(VertxConstants.PORT) : 8080;
+    int httpPort = http != null ? http.getInteger(VertxConstants.PORT) : VertxConstants.DEFAULT_PORT;
     HttpServer server = vertx.createHttpServer().requestHandler(router);
 
     server.listen(httpPort, result -> {
       if(result.succeeded()) {
-        System.out.println("Server started at port " + httpPort);
         promise.complete(result.result());
       } else {
-        System.out.println("Failed to start the server");
         promise.fail(result.cause());
       }
     });

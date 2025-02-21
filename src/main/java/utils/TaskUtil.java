@@ -7,8 +7,8 @@ public class TaskUtil {
 
   public static JsonObject toJson(Task task) {
     return new JsonObject()
-      .put("taskName", task.taskName())
-      .put("completed", task.completed()
+      .put(VertxConstants.TASK_NAME, task.taskName())
+      .put(VertxConstants.COMPLETED, task.completed()
       );
   }
 }
