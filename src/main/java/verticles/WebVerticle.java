@@ -6,6 +6,7 @@ import io.vertx.core.Promise;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
+import utils.VertxConstants;
 
 public class WebVerticle extends AbstractVerticle {
 
@@ -26,8 +27,8 @@ public class WebVerticle extends AbstractVerticle {
 
   Future<HttpServer> startHttpServer(Router router) {
     Promise<HttpServer> promise = Promise.promise();
-    JsonObject http = loadedConfig.getJsonObject("http");
-    int httpPort = http != null ? http.getInteger("port") : 8080;
+    JsonObject http = loadedConfig.getJsonObject(VertxConstants.HTTP);
+    int httpPort = http != null ? http.getInteger(VertxConstants.PORT) : 8080;
     HttpServer server = vertx.createHttpServer().requestHandler(router);
 
     server.listen(httpPort, result -> {

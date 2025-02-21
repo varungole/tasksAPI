@@ -1,6 +1,6 @@
 package config;
 
-import Utils.VertxConstants;
+import utils.VertxConstants;
 import io.vertx.config.ConfigRetriever;
 import io.vertx.config.ConfigRetrieverOptions;
 import io.vertx.config.ConfigStoreOptions;
