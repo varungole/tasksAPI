@@ -1,43 +1,28 @@
 package verticles;
 
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Future;
 import io.vertx.core.Promise;
-import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
-import utils.VertxConstants;
+import verticles.handlers.WebVerticleHandlers;
 
 public class WebVerticle extends AbstractVerticle {
 
-  private final JsonObject loadedConfig;
   private final Router router;
+  private final JsonObject loadedConfig;  // Store loadedConfig
+  private WebVerticleHandlers webVerticleHandlers;
 
   public WebVerticle(JsonObject loadedConfig, Router router) {
-    this.loadedConfig = loadedConfig;
     this.router = router;
+    this.loadedConfig = loadedConfig;
   }
 
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
-    startHttpServer(router)
+    webVerticleHandlers = new WebVerticleHandlers(vertx, loadedConfig);
+
+    webVerticleHandlers.startHttpServer(router)
       .onSuccess(server -> startPromise.complete())
       .onFailure(startPromise::fail);
-  }
-
-  Future<HttpServer> startHttpServer(Router router) {
-    Promise<HttpServer> promise = Promise.promise();
-    JsonObject http = loadedConfig.getJsonObject(VertxConstants.HTTP);
-    int httpPort = http != null ? http.getInteger(VertxConstants.PORT) : VertxConstants.DEFAULT_PORT;
-    HttpServer server = vertx.createHttpServer().requestHandler(router);
-
-    server.listen(httpPort, result -> {
-      if(result.succeeded()) {
-        promise.complete(result.result());
-      } else {
-        promise.fail(result.cause());
-      }
-    });
-    return promise.future();
   }
 }
