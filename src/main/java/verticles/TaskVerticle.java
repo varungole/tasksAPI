@@ -6,13 +6,11 @@ import services.TaskService;
 import verticles.handlers.TaskVerticleHandlers;
 
 public class TaskVerticle extends AbstractVerticle {
-  private final TaskService taskService;
 
-  public TaskVerticle() {
-    taskService = new TaskService();
-  }
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
+    TaskService taskService = new TaskService();
+
     TaskVerticleHandlers taskVerticleHandlers = new TaskVerticleHandlers(vertx, taskService);
     taskVerticleHandlers.startHandlers()
       .onSuccess(server -> startPromise.complete())

@@ -18,7 +18,7 @@ public class RouterHandler {
       if(messageAsyncResult.succeeded()) {
         ctx.response().end((String) messageAsyncResult.result().body());
       } else {
-        ctx.response().setStatusCode(500).end(VertxConstants.INTERNAL_SERVER_ERROR);
+        ctx.response().setStatusCode(VertxConstants.SERVER_ERROR).end(VertxConstants.INTERNAL_SERVER_ERROR);
       }
     });
   }
@@ -29,7 +29,7 @@ public class RouterHandler {
       if(messageAsyncResult.succeeded()) {
         ctx.response().end((String) messageAsyncResult.result().body());
       } else {
-        ctx.response().setStatusCode(500).end(VertxConstants.INTERNAL_SERVER_ERROR);
+        ctx.response().setStatusCode(VertxConstants.SERVER_ERROR).end(VertxConstants.INTERNAL_SERVER_ERROR);
       }
     });
   }
@@ -37,14 +37,15 @@ public class RouterHandler {
   public void createTask(RoutingContext ctx) {
     JsonObject taskJson = ctx.body().asJsonObject();
     if(taskJson == null) {
-      ctx.response().setStatusCode(400).end(VertxConstants.INVALID_JSON_PAYLOAD);
+      ctx.response().setStatusCode(VertxConstants.CLIENT_ERROR).end(VertxConstants.INVALID_JSON_PAYLOAD);
       return;
     }
+
     vertx.eventBus().request(VertxConstants.CREATE_TASK, taskJson, messageAsyncResult -> {
       if(messageAsyncResult.succeeded()) {
-        ctx.response().setStatusCode(201).putHeader(VertxConstants.CONTENT_TYPE, VertxConstants.APPLICATION_JSON).end((String)messageAsyncResult.result().body());
+        ctx.response().setStatusCode(VertxConstants.SUCCESSFUL).putHeader(VertxConstants.CONTENT_TYPE, VertxConstants.APPLICATION_JSON).end((String)messageAsyncResult.result().body());
       } else {
-        ctx.response().setStatusCode(500).end(VertxConstants.INTERNAL_SERVER_ERROR);
+        ctx.response().setStatusCode(VertxConstants.SERVER_ERROR).end(VertxConstants.INTERNAL_SERVER_ERROR);
       }
     });
   }

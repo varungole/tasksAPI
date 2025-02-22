@@ -21,5 +21,9 @@ public class VertxConstants {
   public static final String HTTP = "http";
   public static final String PORT = "port";
   public static final Integer DEFAULT_PORT = 8080;
+  public static final Integer SUCCESSFUL = 200;
+  public static final Integer CLIENT_ERROR = 400;
+  public static final Integer SERVER_ERROR = 500;
+
 
 }

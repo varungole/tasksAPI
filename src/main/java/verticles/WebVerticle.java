@@ -9,8 +9,7 @@ import verticles.handlers.WebVerticleHandlers;
 public class WebVerticle extends AbstractVerticle {
 
   private final Router router;
-  private final JsonObject loadedConfig;  // Store loadedConfig
-  private WebVerticleHandlers webVerticleHandlers;
+  private final JsonObject loadedConfig;
 
   public WebVerticle(JsonObject loadedConfig, Router router) {
     this.router = router;
@@ -19,7 +18,8 @@ public class WebVerticle extends AbstractVerticle {
 
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
-    webVerticleHandlers = new WebVerticleHandlers(vertx, loadedConfig);
+
+    WebVerticleHandlers webVerticleHandlers = new WebVerticleHandlers(vertx, loadedConfig);
 
     webVerticleHandlers.startHttpServer(router)
       .onSuccess(server -> startPromise.complete())
