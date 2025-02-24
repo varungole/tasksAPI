@@ -8,16 +8,13 @@ import utils.VertxConstants;
 
 public class ConfigLoader {
   private final Vertx vertx;
-  private final JsonObject loadedConfig;
 
   public ConfigLoader(Vertx vertx) {
     this.vertx = vertx;
-    loadedConfig = new JsonObject();
   }
 
   public Future<JsonObject> loadConfig() {
     return vertx.fileSystem().readFile(VertxConstants.CONFIG_JSON)
-      .map(Buffer::toJsonObject)
-      .onSuccess(loadedConfig::mergeIn);
+      .map(Buffer::toJsonObject);
   }
 }
