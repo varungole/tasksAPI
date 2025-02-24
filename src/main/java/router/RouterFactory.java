@@ -1,7 +1,5 @@
 package router;
 
-import io.vertx.core.json.JsonObject;
-import io.vertx.ext.web.RoutingContext;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Router;
@@ -18,7 +16,6 @@ public class RouterFactory {
 
   public Future<Router> setupRouter() {
     Router router = Router.router(vertx);
-
     router.route().handler(BodyHandler.create());
 
     router.get("/").handler(routerHandler::getAllTasks);

@@ -8,45 +8,46 @@ import utils.VertxConstants;
 public class RouterHandler {
 
   private final Vertx vertx;
+  private final ResponseHandler responseHandler;
 
   public RouterHandler(Vertx vertx) {
     this.vertx = vertx;
+    this.responseHandler = new ResponseHandler();
   }
 
   public void getAllTasks(RoutingContext ctx) {
-    vertx.eventBus().request(VertxConstants.GET_ALL_TASKS, "", messageAsyncResult -> {
-      if(messageAsyncResult.succeeded()) {
-        ctx.response().end((String) messageAsyncResult.result().body());
-      } else {
-        ctx.response().setStatusCode(VertxConstants.SERVER_ERROR).end(VertxConstants.INTERNAL_SERVER_ERROR);
-      }
-    });
+    sendRequest(ctx, VertxConstants.GET_ALL_TASKS, "");
   }
 
   public void getSingleTask(RoutingContext ctx) {
     String taskName = ctx.pathParam(VertxConstants.TASK_NAME);
-    vertx.eventBus().request(VertxConstants.GET_SINGLE_TASK, taskName, messageAsyncResult -> {
-      if(messageAsyncResult.succeeded()) {
-        ctx.response().end((String) messageAsyncResult.result().body());
-      } else {
-        ctx.response().setStatusCode(VertxConstants.SERVER_ERROR).end(VertxConstants.INTERNAL_SERVER_ERROR);
-      }
-    });
+    sendRequest(ctx, VertxConstants.GET_SINGLE_TASK, taskName);
   }
 
   public void createTask(RoutingContext ctx) {
     JsonObject taskJson = ctx.body().asJsonObject();
-    if(taskJson == null) {
-      ctx.response().setStatusCode(VertxConstants.CLIENT_ERROR).end(VertxConstants.INVALID_JSON_PAYLOAD);
+    if(checkEmptyBody(ctx, taskJson)) {
       return;
     }
+    sendRequest(ctx, VertxConstants.CREATE_TASK, taskJson);
+  }
 
-    vertx.eventBus().request(VertxConstants.CREATE_TASK, taskJson, messageAsyncResult -> {
+  private <T> void sendRequest(RoutingContext ctx, String action, T message) {
+    vertx.eventBus().request(action,message, messageAsyncResult -> {
       if(messageAsyncResult.succeeded()) {
-        ctx.response().setStatusCode(VertxConstants.SUCCESSFUL).putHeader(VertxConstants.CONTENT_TYPE, VertxConstants.APPLICATION_JSON).end((String)messageAsyncResult.result().body());
+        responseHandler.success(messageAsyncResult, ctx);
       } else {
-        ctx.response().setStatusCode(VertxConstants.SERVER_ERROR).end(VertxConstants.INTERNAL_SERVER_ERROR);
+        responseHandler.failure(ctx);
       }
     });
   }
+
+  private Boolean checkEmptyBody(RoutingContext ctx, JsonObject body) {
+    if(body.isEmpty()) {
+      responseHandler.invalid(ctx);
+      return true;
+    }
+    return false;
+  }
+
 }
