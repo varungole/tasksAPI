@@ -35,6 +35,7 @@ public class FruitsVerticleHandlers {
 
   public void startHandler() {
     hmap.put(VertxConstants.CREATE_FRUITS, this::handleCreateFruits);
+    hmap.put(VertxConstants.GET_ALL_FRUITS,this::handleGetAllFruits);
     hmap.forEach((event, handler) -> vertx.eventBus().consumer(event, handler::accept));
   }
 
@@ -45,5 +46,8 @@ public class FruitsVerticleHandlers {
     message.reply(TaskUtil.toJson(fruit).encode());
   }
 
-
+  public void handleGetAllFruits(Message<Object> message) {
+    JsonArray allTasks = fruitsService.getAllFruits();
+    message.reply(allTasks.encode());
+  }
 }

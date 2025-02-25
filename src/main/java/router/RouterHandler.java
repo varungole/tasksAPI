@@ -40,6 +40,10 @@ public class RouterHandler {
     sendRequest(ctx, VertxConstants.CREATE_FRUITS, fruitsJson);
   }
 
+  public void getFruits(RoutingContext ctx) {
+    sendRequest(ctx, VertxConstants.GET_ALL_FRUITS, "");
+  }
+
   private <T> void sendRequest(RoutingContext ctx, String action, T message) {
     vertx.eventBus().request(action,message, messageAsyncResult -> {
       if(messageAsyncResult.succeeded()) {

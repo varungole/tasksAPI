@@ -18,10 +18,14 @@ public class RouterFactory {
     Router router = Router.router(vertx);
     router.route().handler(BodyHandler.create());
 
-    router.get("/").handler(routerHandler::getAllTasks);
+    router.get("/tasks").handler(routerHandler::getAllTasks);
+    router.post("/fruits").handler(routerHandler::createFruits);
+    router.get("/fruits").handler(routerHandler::getFruits);
     router.get("/:taskName").handler(routerHandler::getSingleTask);
     router.post("/tasks").handler(routerHandler::createTask);
-    router.post("/fruits").handler(routerHandler::createFruits);
+    System.out.println("Routes registered:");
+    router.getRoutes().forEach(route -> System.out.println(route.getPath()));
+
 
     return Future.succeededFuture(router);
   }

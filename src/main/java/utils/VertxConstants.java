@@ -26,5 +26,6 @@ public class VertxConstants {
   public static final String CREATE_FRUITS = "createFruits.vertx.addr";
   public static final String FRUIT_NAME = "name";
   public static final String IS_SWEET = "isSweet";
+  public static final String GET_ALL_FRUITS = "getAllFruits.vertx.addr";
 
 }
