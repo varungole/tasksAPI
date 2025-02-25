@@ -18,7 +18,6 @@ public class VerticleDeployer {
   public static Future<Void> deployVerticle(Vertx vertx, Router router, JsonObject loadedConfig) {
     Promise<Void> promise = Promise.promise();
 
-    int instances = Runtime.getRuntime().availableProcessors();
     FruitsService fruitsService = new FruitsService();
     TaskService taskService = new TaskService();
 
