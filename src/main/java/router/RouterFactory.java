@@ -21,6 +21,7 @@ public class RouterFactory {
     router.get("/").handler(routerHandler::getAllTasks);
     router.get("/:taskName").handler(routerHandler::getSingleTask);
     router.post("/tasks").handler(routerHandler::createTask);
+    router.post("/fruits").handler(routerHandler::createFruits);
 
     return Future.succeededFuture(router);
   }

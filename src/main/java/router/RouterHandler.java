@@ -32,6 +32,14 @@ public class RouterHandler {
     sendRequest(ctx, VertxConstants.CREATE_TASK, taskJson);
   }
 
+  public void createFruits(RoutingContext ctx) {
+    JsonObject fruitsJson = ctx.body().asJsonObject();
+    if(checkEmptyBody(ctx, fruitsJson)) {
+      return;
+    }
+    sendRequest(ctx, VertxConstants.CREATE_FRUITS, fruitsJson);
+  }
+
   private <T> void sendRequest(RoutingContext ctx, String action, T message) {
     vertx.eventBus().request(action,message, messageAsyncResult -> {
       if(messageAsyncResult.succeeded()) {

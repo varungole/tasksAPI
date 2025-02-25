@@ -23,5 +23,8 @@ public class VertxConstants {
   public static final String TASK_NOT_FOUND = "Task not found";
   public static final String HTTP = "http";
   public static final String PORT = "port";
+  public static final String CREATE_FRUITS = "createFruits.vertx.addr";
+  public static final String FRUIT_NAME = "name";
+  public static final String IS_SWEET = "isSweet";
 
 }
