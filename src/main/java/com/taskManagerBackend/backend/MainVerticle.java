@@ -1,7 +1,7 @@
 package com.taskManagerBackend.backend;
 
-import router.ResponseHandler;
-import router.RouterHandler;
+import router.RouterUtility.ResponseHandler;
+import router.RouterLogic.RouterHandler;
 import utils.VertxConstants;
 import config.ConfigLoader;
 import io.vertx.core.AbstractVerticle;
@@ -9,7 +9,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Promise;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
-import router.RouterFactory;
+import router.RouterLogic.RouterFactory;
 
 
 public class MainVerticle extends AbstractVerticle {

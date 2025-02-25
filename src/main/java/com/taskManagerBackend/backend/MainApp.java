@@ -7,7 +7,6 @@ public class MainApp {
 
   public static void main(String[] args) {
     Vertx vertx = Vertx.vertx(new VertxOptions().setBlockedThreadCheckInterval(1000));
-    int instances = Runtime.getRuntime().availableProcessors();
 
     vertx.deployVerticle(MainVerticle.class.getName(), stringAsyncResult -> {
       if(stringAsyncResult.succeeded()) {
