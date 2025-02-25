@@ -10,9 +10,9 @@ public class RouterHandler {
   private final Vertx vertx;
   private final ResponseHandler responseHandler;
 
-  public RouterHandler(Vertx vertx) {
+  public RouterHandler(Vertx vertx, ResponseHandler responseHandler) {
     this.vertx = vertx;
-    this.responseHandler = new ResponseHandler();
+    this.responseHandler = responseHandler;
   }
 
   public void getAllTasks(RoutingContext ctx) {

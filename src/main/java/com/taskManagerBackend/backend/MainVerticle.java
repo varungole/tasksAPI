@@ -1,5 +1,7 @@
 package com.taskManagerBackend.backend;
 
+import router.ResponseHandler;
+import router.RouterHandler;
 import utils.VertxConstants;
 import config.ConfigLoader;
 import io.vertx.core.AbstractVerticle;
@@ -16,7 +18,9 @@ public class MainVerticle extends AbstractVerticle {
   public void start(Promise<Void> startPromise) throws Exception {
 
     ConfigLoader configLoader = new ConfigLoader(vertx);
-    RouterFactory routerFactory = new RouterFactory(vertx);
+    ResponseHandler responseHandler = new ResponseHandler();
+    RouterHandler routerHandler = new RouterHandler(vertx, responseHandler);
+    RouterFactory routerFactory = new RouterFactory(vertx, routerHandler);
 
     Future<JsonObject> configFuture = configLoader.loadConfig();
     Future<Router> routerFuture = routerFactory.setupRouter();

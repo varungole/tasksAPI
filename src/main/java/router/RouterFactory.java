@@ -9,9 +9,9 @@ public class RouterFactory {
   private final Vertx vertx;
   private final RouterHandler routerHandler;
 
-  public RouterFactory(Vertx vertx) {
+  public RouterFactory(Vertx vertx, RouterHandler routerHandler) {
     this.vertx = vertx;
-    this.routerHandler = new RouterHandler(vertx);
+    this.routerHandler = routerHandler;
   }
 
   public Future<Router> setupRouter() {
@@ -23,9 +23,6 @@ public class RouterFactory {
     router.get("/fruits").handler(routerHandler::getFruits);
     router.get("/:taskName").handler(routerHandler::getSingleTask);
     router.post("/tasks").handler(routerHandler::createTask);
-    System.out.println("Routes registered:");
-    router.getRoutes().forEach(route -> System.out.println(route.getPath()));
-
 
     return Future.succeededFuture(router);
   }
