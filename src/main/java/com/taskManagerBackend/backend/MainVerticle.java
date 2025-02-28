@@ -21,6 +21,7 @@ public class MainVerticle extends AbstractVerticle {
     ConfigLoader configLoader = new ConfigLoader(vertx);
     ResponseHandler responseHandler = new ResponseHandler();
     AuthenticateService authenticateService = new AuthenticateService();
+
     RouterHandler routerHandler = new RouterHandler(vertx, responseHandler);
     RouterFactory routerFactory = new RouterFactory(vertx, routerHandler, authenticateService);
 
