@@ -27,5 +27,8 @@ public class VertxConstants {
   public static final String FRUIT_NAME = "name";
   public static final String IS_SWEET = "isSweet";
   public static final String GET_ALL_FRUITS = "getAllFruits.vertx.addr";
+  public static final String X_AUTHENTICATE = "X-AUTHENTICATE";
+  public static final String X_AUTHENTICATE_KEY = "#QWERTY1781237812";
+  public static final String UNAUTHORIZED_REQUEST = "Request is Unauthorized";
 
 }

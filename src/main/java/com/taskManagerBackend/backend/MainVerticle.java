@@ -1,5 +1,6 @@
 package com.taskManagerBackend.backend;
 
+import auth.AuthenticateService;
 import router.RouterUtility.ResponseHandler;
 import router.RouterLogic.RouterHandler;
 import utils.VertxConstants;
@@ -19,8 +20,9 @@ public class MainVerticle extends AbstractVerticle {
 
     ConfigLoader configLoader = new ConfigLoader(vertx);
     ResponseHandler responseHandler = new ResponseHandler();
+    AuthenticateService authenticateService = new AuthenticateService();
     RouterHandler routerHandler = new RouterHandler(vertx, responseHandler);
-    RouterFactory routerFactory = new RouterFactory(vertx, routerHandler);
+    RouterFactory routerFactory = new RouterFactory(vertx, routerHandler, authenticateService);
 
     Future<JsonObject> configFuture = configLoader.loadConfig();
     Future<Router> routerFuture = routerFactory.setupRouter();
