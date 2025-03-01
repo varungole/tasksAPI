@@ -30,5 +30,6 @@ public class VertxConstants {
   public static final String X_AUTHENTICATE = "X-AUTHENTICATE";
   public static final String X_AUTHENTICATE_KEY = "#QWERTY1781237812";
   public static final String UNAUTHORIZED_REQUEST = "Request is Unauthorized";
-
+  public static final String USER_NAME = "X-USERNAME";
+  public static final String MISSING_USERNAME = "Username is missing";
 }
