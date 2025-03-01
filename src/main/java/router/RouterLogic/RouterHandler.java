@@ -5,7 +5,8 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import router.RouterInterface.IRouterHandler;
 import router.RouterUtility.ResponseHandler;
-import utils.VertxConstants;
+import static utils.VertxConstants.*;
+
 
 public class RouterHandler implements IRouterHandler {
 
@@ -19,13 +20,13 @@ public class RouterHandler implements IRouterHandler {
 
   @Override
   public void getAllTasks(RoutingContext ctx) {
-    sendRequest(ctx, VertxConstants.GET_ALL_TASKS, "");
+    sendRequest(ctx, GET_ALL_TASKS, "");
   }
 
   @Override
   public void getSingleTask(RoutingContext ctx) {
-    String taskName = ctx.pathParam(VertxConstants.TASK_NAME);
-    sendRequest(ctx, VertxConstants.GET_SINGLE_TASK, taskName);
+    String taskName = ctx.pathParam(TASK_NAME);
+    sendRequest(ctx,GET_SINGLE_TASK, taskName);
   }
 
   @Override
@@ -34,7 +35,7 @@ public class RouterHandler implements IRouterHandler {
     if(checkEmptyBody(ctx, taskJson)) {
       return;
     }
-    sendRequest(ctx, VertxConstants.CREATE_TASK, taskJson);
+    sendRequest(ctx,CREATE_TASK, taskJson);
   }
 
   @Override
@@ -43,12 +44,12 @@ public class RouterHandler implements IRouterHandler {
     if(checkEmptyBody(ctx, fruitsJson)) {
       return;
     }
-    sendRequest(ctx, VertxConstants.CREATE_FRUITS, fruitsJson);
+    sendRequest(ctx, CREATE_FRUITS, fruitsJson);
   }
 
   @Override
   public void getFruits(RoutingContext ctx) {
-    sendRequest(ctx, VertxConstants.GET_ALL_FRUITS, "");
+    sendRequest(ctx,GET_ALL_FRUITS, "");
   }
 
   private void sendRequest(RoutingContext ctx, String action, Object message) {

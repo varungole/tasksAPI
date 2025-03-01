@@ -4,7 +4,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonObject;
-import utils.VertxConstants;
+import static utils.VertxConstants.*;
 
 public class ConfigLoader {
   private final Vertx vertx;
@@ -14,7 +14,7 @@ public class ConfigLoader {
   }
 
   public Future<JsonObject> loadConfig() {
-    return vertx.fileSystem().readFile(VertxConstants.CONFIG_JSON)
+    return vertx.fileSystem().readFile(CONFIG_JSON)
       .map(Buffer::toJsonObject);
   }
 }

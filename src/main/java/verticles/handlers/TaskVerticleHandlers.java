@@ -9,7 +9,7 @@ import io.vertx.core.json.JsonObject;
 import models.Task;
 import services.TaskService;
 import utils.TaskUtil;
-import utils.VertxConstants;
+import static utils.VertxConstants.*;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -34,9 +34,9 @@ public class TaskVerticleHandlers {
   }
 
   public void startHandler() {
-    hmap.put(VertxConstants.GET_ALL_TASKS,this::handleAllTask);
-    hmap.put(VertxConstants.GET_SINGLE_TASK, this::handleSingleTask);
-    hmap.put(VertxConstants.CREATE_TASK, this::handleCreateTask);
+    hmap.put(GET_ALL_TASKS,this::handleAllTask);
+    hmap.put(GET_SINGLE_TASK, this::handleSingleTask);
+    hmap.put(CREATE_TASK, this::handleCreateTask);
     hmap.forEach((event,handler) -> vertx.eventBus().consumer(event, handler::accept));
   }
 
@@ -48,12 +48,12 @@ public class TaskVerticleHandlers {
   public void handleSingleTask(Message<Object> message) {
     String taskName = (String)message.body();
     Task task = taskService.getTask(taskName);
-    message.reply(task != null ? TaskUtil.toJson(task).encode() : VertxConstants.TASK_NOT_FOUND);
+    message.reply(task != null ? TaskUtil.toJson(task).encode() : TASK_NOT_FOUND);
   }
 
   public void handleCreateTask(Message<Object> message) {
     JsonObject taskJson = (JsonObject) message.body();
-    Task task = new Task(UUID.randomUUID(), taskJson.getString(VertxConstants.TASK_NAME), taskJson.getBoolean(VertxConstants.COMPLETED));
+    Task task = new Task(UUID.randomUUID(), taskJson.getString(TASK_NAME), taskJson.getBoolean(COMPLETED));
     taskService.createTask(task);
     message.reply(TaskUtil.toJson(task).encode());
   }

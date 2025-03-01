@@ -9,7 +9,8 @@ import io.vertx.core.json.JsonObject;
 import models.Fruit;
 import services.FruitsService;
 import utils.TaskUtil;
-import utils.VertxConstants;
+import static utils.VertxConstants.*;
+
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -34,14 +35,14 @@ public class FruitsVerticleHandlers {
   }
 
   public void startHandler() {
-    hmap.put(VertxConstants.CREATE_FRUITS, this::handleCreateFruits);
-    hmap.put(VertxConstants.GET_ALL_FRUITS,this::handleGetAllFruits);
+    hmap.put(CREATE_FRUITS, this::handleCreateFruits);
+    hmap.put(GET_ALL_FRUITS,this::handleGetAllFruits);
     hmap.forEach((event, handler) -> vertx.eventBus().consumer(event, handler::accept));
   }
 
   public void handleCreateFruits(Message<Object> message) {
     JsonObject fruitsJson = (JsonObject) message.body();
-    Fruit fruit = new Fruit(UUID.randomUUID(), fruitsJson.getString(VertxConstants.FRUIT_NAME), fruitsJson.getBoolean(VertxConstants.IS_SWEET));
+    Fruit fruit = new Fruit(UUID.randomUUID(), fruitsJson.getString(FRUIT_NAME), fruitsJson.getBoolean(IS_SWEET));
     fruitsService.createFruit(fruit);
     message.reply(TaskUtil.toJson(fruit).encode());
   }

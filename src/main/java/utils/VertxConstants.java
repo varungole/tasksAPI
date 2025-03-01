@@ -8,6 +8,8 @@ public class VertxConstants {
   public static final Integer SUCCESSFUL = 200;
   public static final Integer CLIENT_ERROR = 400;
   public static final Integer SERVER_ERROR = 500;
+  public static final Integer UNAUTHORIZED = 403;
+  public static final Integer RATE_LIMIT = 10;
 
 
   public static final String CONFIG_JSON = "config.json";
@@ -32,4 +34,6 @@ public class VertxConstants {
   public static final String UNAUTHORIZED_REQUEST = "Request is Unauthorized";
   public static final String USER_NAME = "X-USERNAME";
   public static final String MISSING_USERNAME = "Username is missing";
+  public static final String TOO_MANY_REQUESTS = "Too many Request, Please wait for cooldown";
+  public static final String ID = "id";
 }
