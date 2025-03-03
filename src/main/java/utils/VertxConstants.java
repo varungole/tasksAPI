@@ -2,14 +2,15 @@ package utils;
 
 public class VertxConstants {
 
-  public static final Integer ZERO = 0;
-  public static final Integer ONE = 1;
-  public static final Integer DEFAULT_PORT = 8080;
-  public static final Integer SUCCESSFUL = 200;
-  public static final Integer CLIENT_ERROR = 400;
-  public static final Integer SERVER_ERROR = 500;
-  public static final Integer UNAUTHORIZED = 403;
-  public static final Integer RATE_LIMIT = 10;
+  public static final int ZERO = 0;
+  public static final int ONE = 1;
+  public static final int DEFAULT_PORT = 8080;
+  public static final int SUCCESSFUL = 200;
+  public static final int CLIENT_ERROR = 400;
+  public static final int SERVER_ERROR = 500;
+  public static final int RATE_ERROR = 429;
+  public static final int RATE_LIMIT = 10;
+  public static final int FIVE = 5;
 
 
   public static final String CONFIG_JSON = "config.json";
