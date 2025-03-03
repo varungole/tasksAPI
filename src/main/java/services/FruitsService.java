@@ -2,7 +2,7 @@ package services;
 
 import io.vertx.core.json.JsonArray;
 import models.Fruit;
-import utils.TaskUtil;
+import utils.Util;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,7 +14,7 @@ public class FruitsService {
   public JsonArray getAllFruits() {
     JsonArray fruits = new JsonArray();
     for(Fruit fruit : fruitsMap.values()) {
-      fruits.add(TaskUtil.toJson(fruit));
+      fruits.add(Util.toJson(fruit));
     }
     return fruits;
   }

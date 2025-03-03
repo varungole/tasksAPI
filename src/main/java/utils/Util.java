@@ -6,7 +6,7 @@ import java.lang.reflect.RecordComponent;
 import java.util.UUID;
 import static utils.VertxConstants.*;
 
-public class TaskUtil {
+public class Util {
 
   public static <T extends Record> JsonObject toJson(T record) {
     JsonObject jsonObject = new JsonObject().put(ID, UUID.randomUUID());

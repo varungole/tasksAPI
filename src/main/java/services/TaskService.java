@@ -2,7 +2,7 @@ package services;
 
 import io.vertx.core.json.JsonArray;
 import models.Task;
-import utils.TaskUtil;
+import utils.Util;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,7 +14,7 @@ public class TaskService {
   public JsonArray getAllTasks() {
     JsonArray tasks = new JsonArray();
     for(Task task : taskMap.values()) {
-        tasks.add(TaskUtil.toJson(task));
+        tasks.add(Util.toJson(task));
     }
     return tasks;
   }

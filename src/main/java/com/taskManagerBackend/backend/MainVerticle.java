@@ -22,7 +22,7 @@ public class MainVerticle extends AbstractVerticle {
     ConfigLoader configLoader = new ConfigLoader(vertx);
     ResponseHandler responseHandler = new ResponseHandler();
     AuthenticateService authenticateService = new AuthenticateService();
-    MyRateLimiter myRateLimiter = new MyRateLimiter();
+    MyRateLimiter myRateLimiter = new MyRateLimiter(vertx);
 
     RouterHandler routerHandler = new RouterHandler(vertx, responseHandler);
     RouterFactory routerFactory = new RouterFactory(vertx, routerHandler, authenticateService, myRateLimiter);

@@ -8,7 +8,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import models.Fruit;
 import services.FruitsService;
-import utils.TaskUtil;
+import utils.Util;
 import static utils.VertxConstants.*;
 
 
@@ -44,7 +44,7 @@ public class FruitsVerticleHandlers {
     JsonObject fruitsJson = (JsonObject) message.body();
     Fruit fruit = new Fruit(UUID.randomUUID(), fruitsJson.getString(FRUIT_NAME), fruitsJson.getBoolean(IS_SWEET));
     fruitsService.createFruit(fruit);
-    message.reply(TaskUtil.toJson(fruit).encode());
+    message.reply(Util.toJson(fruit).encode());
   }
 
   public void handleGetAllFruits(Message<Object> message) {
