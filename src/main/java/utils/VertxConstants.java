@@ -11,6 +11,8 @@ public class VertxConstants {
   public static final int RATE_ERROR = 429;
   public static final int RATE_LIMIT = 10;
   public static final int FIVE = 5;
+  public static final int USERNAME_MISSING = 402;
+  public static final int AUTHENTICATION_ERROR = 403;
 
 
   public static final String CONFIG_JSON = "config.json";
