@@ -14,10 +14,11 @@ public class VertxConstants {
   public static final int USERNAME_MISSING = 402;
   public static final int AUTHENTICATION_ERROR = 403;
 
+  public static final long RATE_LIMIT_WINDOW_MS = 10000L;  // 10 seconds
 
   public static final String CONFIG_JSON = "config.json";
   public static final String TASK_NAME = "taskName";
-  public static final String COMPLETED = "Completed";
+  public static final String COMPLETED = "completed";
   public static final String GET_ALL_TASKS = "getAllTasks.vertx.addr";
   public static final String GET_SINGLE_TASK = "getSingleTask.vertx.addr";
   public static final String CREATE_TASK = "createTask.vertx.addr";
@@ -40,6 +41,5 @@ public class VertxConstants {
   public static final String TOO_MANY_REQUESTS = "Too many Request, Please wait for cooldown";
   public static final String ID = "id";
   public static final String PRIORITY = "priority";
-  public static final long RATE_LIMIT_WINDOW_MS = 10000L;  // 10 seconds
 
 }
