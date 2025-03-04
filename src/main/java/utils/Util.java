@@ -29,7 +29,12 @@ public class Util {
         throw new RuntimeException("Failed to serialize JSON Object");
       }
     }
-
     return jsonObject;
+  }
+
+  public enum Priority {
+    LOW,
+    MEDIUM,
+    HIGH;
   }
 }

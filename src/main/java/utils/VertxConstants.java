@@ -39,6 +39,7 @@ public class VertxConstants {
   public static final String MISSING_USERNAME = "Username is missing";
   public static final String TOO_MANY_REQUESTS = "Too many Request, Please wait for cooldown";
   public static final String ID = "id";
+  public static final String PRIORITY = "priority";
   public static final long RATE_LIMIT_WINDOW_MS = 10000L;  // 10 seconds
 
 }

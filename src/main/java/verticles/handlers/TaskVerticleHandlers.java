@@ -8,7 +8,9 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import models.Task;
 import services.TaskService;
-import utils.Util;
+import utils.Util.*;
+
+import static utils.Util.toJson;
 import static utils.VertxConstants.*;
 
 import java.util.HashMap;
@@ -48,13 +50,13 @@ public class TaskVerticleHandlers {
   public void handleSingleTask(Message<Object> message) {
     String taskName = (String)message.body();
     Task task = taskService.getTask(taskName);
-    message.reply(task != null ? Util.toJson(task).encode() : TASK_NOT_FOUND);
+    message.reply(task != null ? toJson(task).encode() : TASK_NOT_FOUND);
   }
 
   public void handleCreateTask(Message<Object> message) {
     JsonObject taskJson = (JsonObject) message.body();
-    Task task = new Task(UUID.randomUUID(), taskJson.getString(TASK_NAME), taskJson.getBoolean(COMPLETED));
+    Task task = new Task(UUID.randomUUID(), taskJson.getString(TASK_NAME), taskJson.getBoolean(COMPLETED), Priority.valueOf(taskJson.getString(PRIORITY).toUpperCase()));
     taskService.createTask(task);
-    message.reply(Util.toJson(task).encode());
+    message.reply(toJson(task).encode());
   }
 }
