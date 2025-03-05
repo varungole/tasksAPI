@@ -71,7 +71,7 @@ public class TaskVerticleHandlers {
           Priority.valueOf(jsonObject.getString(PRIORITY).toUpperCase()));
         tasks.add(task);
       } else {
-        message.fail(400, "Invalid JSON format");
+        message.fail(JSON_ERROR, INVALID_JSON);
         return;
       }
     }

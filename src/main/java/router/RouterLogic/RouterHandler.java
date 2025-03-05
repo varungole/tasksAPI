@@ -4,18 +4,13 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.DecodeException;
-import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.core.parsetools.JsonEventType;
-import io.vertx.core.parsetools.JsonParser;
+import io.vertx.ext.web.RequestBody;
 import io.vertx.ext.web.RoutingContext;
 import router.RouterInterface.IRouterHandler;
 import router.RouterUtility.ResponseHandler;
 
-import java.util.concurrent.atomic.AtomicReference;
-
-import static java.beans.Beans.isInstanceOf;
 import static utils.VertxConstants.*;
 
 
@@ -35,7 +30,6 @@ public class RouterHandler implements IRouterHandler {
 
   @Override
   public void sortTasks(RoutingContext ctx) {
-    System.out.println("Inside Sort Tasks");
     MultiMap params = ctx.request().params();
     String sorting = params.get("sorting");
     sort(ctx);
@@ -54,10 +48,15 @@ public class RouterHandler implements IRouterHandler {
 
   @Override
   public void createTask(RoutingContext ctx) {
+    if(invalidJsonCheck(ctx.body(), ctx)) {
+      return;
+    }
+
     JsonArray taskJson = ctx.body().asJsonArray();
     if(checkEmptyBody(ctx, taskJson)) {
       return;
     }
+
     sendRequest(ctx,CREATE_TASK, taskJson);
   }
 
@@ -91,6 +90,17 @@ public class RouterHandler implements IRouterHandler {
       return true;
     }
     return false;
+  }
+
+  private boolean invalidJsonCheck(RequestBody body, RoutingContext ctx) {
+    try {
+      Buffer buffer = body.buffer();
+      new JsonObject(buffer);
+      responseHandler.invalid(ctx);
+      return true;
+    } catch (DecodeException e) {
+      return false;
+    }
   }
 
 }

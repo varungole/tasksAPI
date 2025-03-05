@@ -13,6 +13,7 @@ public class VertxConstants {
   public static final int FIVE = 5;
   public static final int USERNAME_MISSING = 402;
   public static final int AUTHENTICATION_ERROR = 403;
+  public static final int JSON_ERROR = 400;
 
   public static final long RATE_LIMIT_WINDOW_MS = 10000L;  // 10 seconds
 
@@ -42,5 +43,6 @@ public class VertxConstants {
   public static final String TOO_MANY_REQUESTS = "Too many Request, Please wait for cooldown";
   public static final String ID = "id";
   public static final String PRIORITY = "priority";
+  public static final String INVALID_JSON = "Invalid JSON format";
 
 }
