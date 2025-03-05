@@ -1,8 +1,10 @@
 package utils;
 
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
 import java.lang.reflect.RecordComponent;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -18,6 +20,14 @@ public class Util {
       requests = new AtomicInteger(ONE);
       validTime = System.currentTimeMillis() + RATE_LIMIT_WINDOW_MS;
     }
+  }
+
+  public static <T extends Record>JsonArray toJsonArray(List<T> records) {
+    JsonArray jsonArray = new JsonArray();
+    for(T record : records) {
+      jsonArray.add(toJson(record));
+    }
+    return jsonArray;
   }
 
   public static <T extends Record> JsonObject toJson(T record) {

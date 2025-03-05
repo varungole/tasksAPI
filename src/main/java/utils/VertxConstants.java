@@ -22,6 +22,7 @@ public class VertxConstants {
   public static final String GET_ALL_TASKS = "getAllTasks.vertx.addr";
   public static final String GET_SINGLE_TASK = "getSingleTask.vertx.addr";
   public static final String CREATE_TASK = "createTask.vertx.addr";
+  public static final String SORT_TASKS = "sortTaks.vertx.addr";
   public static final String INTERNAL_SERVER_ERROR = "Internal Server Error";
   public static final String INVALID_JSON_PAYLOAD = "Invalid JSON Payload";
   public static final String CONTENT_TYPE = "content-type";

@@ -4,6 +4,7 @@ import io.vertx.core.json.JsonArray;
 import models.Task;
 import utils.Util;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -23,8 +24,10 @@ public class TaskService {
       return taskMap.get(taskName);
   }
 
-  public void createTask(Task task) {
-    taskMap.put(task.taskName(), task);
+  public void createTask(List<Task> tasks) {
+    for(Task task : tasks) {
+      taskMap.put(task.taskName(), task);
+    }
   }
 
 }

@@ -32,11 +32,14 @@ public class RouterFactory implements IRouterFactory {
     router.route().handler(CorsHandler.create().allowedHeader("localhost"));
     router.get("/api/*").handler(authenticateService::handleAuth);
     router.route().handler(myRateLimiter::handle);
+
+    router.get("/api/tasks/*").handler(routerHandler::sortTasks);
     router.get("/api/tasks").handler(routerHandler::getAllTasks);
+    router.post("/api/tasks").handler(routerHandler::createTask);
+
     router.post("/api/fruits").handler(routerHandler::createFruits);
     router.get("/api/fruits").handler(routerHandler::getFruits);
     router.get("/api/:taskName").handler(routerHandler::getSingleTask);
-    router.post("/api/tasks").handler(routerHandler::createTask);
 
     return Future.succeededFuture(router);
   }

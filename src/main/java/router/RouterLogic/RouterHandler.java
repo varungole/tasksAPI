@@ -1,10 +1,21 @@
 package router.RouterLogic;
 
+import io.vertx.core.MultiMap;
 import io.vertx.core.Vertx;
+import io.vertx.core.buffer.Buffer;
+import io.vertx.core.json.DecodeException;
+import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.parsetools.JsonEventType;
+import io.vertx.core.parsetools.JsonParser;
 import io.vertx.ext.web.RoutingContext;
 import router.RouterInterface.IRouterHandler;
 import router.RouterUtility.ResponseHandler;
+
+import java.util.concurrent.atomic.AtomicReference;
+
+import static java.beans.Beans.isInstanceOf;
 import static utils.VertxConstants.*;
 
 
@@ -16,6 +27,18 @@ public class RouterHandler implements IRouterHandler {
   public RouterHandler(Vertx vertx, ResponseHandler responseHandler) {
     this.vertx = vertx;
     this.responseHandler = responseHandler;
+  }
+
+  public void sort(RoutingContext ctx) {
+    sendRequest(ctx, SORT_TASKS, "");
+  }
+
+  @Override
+  public void sortTasks(RoutingContext ctx) {
+    System.out.println("Inside Sort Tasks");
+    MultiMap params = ctx.request().params();
+    String sorting = params.get("sorting");
+    sort(ctx);
   }
 
   @Override
@@ -31,7 +54,7 @@ public class RouterHandler implements IRouterHandler {
 
   @Override
   public void createTask(RoutingContext ctx) {
-    JsonObject taskJson = ctx.body().asJsonObject();
+    JsonArray taskJson = ctx.body().asJsonArray();
     if(checkEmptyBody(ctx, taskJson)) {
       return;
     }
@@ -40,7 +63,7 @@ public class RouterHandler implements IRouterHandler {
 
   @Override
   public void createFruits(RoutingContext ctx) {
-    JsonObject fruitsJson = ctx.body().asJsonObject();
+    JsonArray fruitsJson = ctx.body().asJsonArray();
     if(checkEmptyBody(ctx, fruitsJson)) {
       return;
     }
@@ -53,7 +76,7 @@ public class RouterHandler implements IRouterHandler {
   }
 
   private void sendRequest(RoutingContext ctx, String action, Object message) {
-    vertx.eventBus().request(action,message, messageAsyncResult -> {
+    vertx.eventBus().request(action, message, messageAsyncResult -> {
       if(messageAsyncResult.succeeded()) {
         responseHandler.success(messageAsyncResult, ctx);
       } else {
@@ -62,7 +85,7 @@ public class RouterHandler implements IRouterHandler {
     });
   }
 
-  private Boolean checkEmptyBody(RoutingContext ctx, JsonObject body) {
+  private Boolean checkEmptyBody(RoutingContext ctx, JsonArray body) {
     if(body.isEmpty()) {
       responseHandler.invalid(ctx);
       return true;

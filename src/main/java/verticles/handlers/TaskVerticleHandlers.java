@@ -11,10 +11,10 @@ import services.TaskService;
 import utils.Util.*;
 
 import static utils.Util.toJson;
+import static utils.Util.toJsonArray;
 import static utils.VertxConstants.*;
 
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class TaskVerticleHandlers {
@@ -39,7 +39,13 @@ public class TaskVerticleHandlers {
     hmap.put(GET_ALL_TASKS,this::handleAllTask);
     hmap.put(GET_SINGLE_TASK, this::handleSingleTask);
     hmap.put(CREATE_TASK, this::handleCreateTask);
+    hmap.put(SORT_TASKS, this::sortTasks);
     hmap.forEach((event,handler) -> vertx.eventBus().consumer(event, handler::accept));
+  }
+
+  public void sortTasks(Message<Object> message) {
+    JsonArray allTasks = taskService.getAllTasks();
+    message.reply(allTasks.encode());
   }
 
   public void handleAllTask(Message<Object> message) {
@@ -54,9 +60,23 @@ public class TaskVerticleHandlers {
   }
 
   public void handleCreateTask(Message<Object> message) {
-    JsonObject taskJson = (JsonObject) message.body();
-    Task task = new Task(UUID.randomUUID(), taskJson.getString(TASK_NAME), taskJson.getBoolean(COMPLETED), Priority.valueOf(taskJson.getString(PRIORITY).toUpperCase()));
-    taskService.createTask(task);
-    message.reply(toJson(task).encode());
+    JsonArray taskJson = (JsonArray) message.body();
+
+    List<Task> tasks = new ArrayList<>();
+    for(Object obj : taskJson) {
+      if(obj instanceof JsonObject jsonObject) {
+        Task task = new Task(UUID.randomUUID(),
+          jsonObject.getString(TASK_NAME),
+          jsonObject.getBoolean(COMPLETED),
+          Priority.valueOf(jsonObject.getString(PRIORITY).toUpperCase()));
+        tasks.add(task);
+      } else {
+        message.fail(400, "Invalid JSON format");
+        return;
+      }
+    }
+    taskService.createTask(tasks);
+    message.reply(toJsonArray(tasks).encode());
+
   }
 }
