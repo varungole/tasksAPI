@@ -24,16 +24,9 @@ public class RouterHandler implements IRouterHandler {
     this.responseHandler = responseHandler;
   }
 
-  public void sort(RoutingContext ctx) {
-    sendRequest(ctx, SORT_TASKS, "");
-  }
-
   @Override
   public void sortTasks(RoutingContext ctx) {
-    System.out.println("Inside Sort Tasks");
-    MultiMap params = ctx.request().params();
-    String sorting = params.get("sorting");
-    sort(ctx);
+    sendRequest(ctx, SORT_TASKS, "");
   }
 
   @Override
