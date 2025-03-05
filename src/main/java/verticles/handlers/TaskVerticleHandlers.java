@@ -16,6 +16,7 @@ import static utils.VertxConstants.*;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class TaskVerticleHandlers {
 
@@ -43,9 +44,17 @@ public class TaskVerticleHandlers {
     hmap.forEach((event,handler) -> vertx.eventBus().consumer(event, handler::accept));
   }
 
-  public void sortTasks(Message<Object> message) {
+  private JsonArray sortBasedOnPriority() {
     JsonArray allTasks = taskService.getAllTasks();
-    message.reply(allTasks.encode());
+    List<JsonObject> sortedList = allTasks.stream()
+      .map(obj -> (JsonObject) obj)
+      .sorted(Comparator.comparing(o -> Priority.valueOf(o.getString("priority")).ordinal()))
+      .toList();
+    return new JsonArray(sortedList);
+  }
+
+  public void sortTasks(Message<Object> message) {
+    message.reply(sortBasedOnPriority().encode());
   }
 
   public void handleAllTask(Message<Object> message) {

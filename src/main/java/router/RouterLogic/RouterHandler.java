@@ -30,6 +30,7 @@ public class RouterHandler implements IRouterHandler {
 
   @Override
   public void sortTasks(RoutingContext ctx) {
+    System.out.println("Inside Sort Tasks");
     MultiMap params = ctx.request().params();
     String sorting = params.get("sorting");
     sort(ctx);
