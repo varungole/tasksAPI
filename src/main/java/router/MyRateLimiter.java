@@ -27,7 +27,6 @@ public class MyRateLimiter {
       long now = System.currentTimeMillis();
       timeMap.entrySet().removeIf(entry -> entry.getValue().validTime < now);
     });
-
   }
 
   public void handle(RoutingContext ctx) {

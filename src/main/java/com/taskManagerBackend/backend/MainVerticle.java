@@ -4,7 +4,6 @@ import auth.AuthenticateService;
 import router.MyRateLimiter;
 import router.RouterUtility.ResponseHandler;
 import router.RouterLogic.RouterHandler;
-import utils.VertxConstants;
 import config.ConfigLoader;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
@@ -12,6 +11,7 @@ import io.vertx.core.Promise;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import router.RouterLogic.RouterFactory;
+import static utils.VertxConstants.*;
 
 
 public class MainVerticle extends AbstractVerticle {
@@ -31,8 +31,8 @@ public class MainVerticle extends AbstractVerticle {
     Future<Router> routerFuture = routerFactory.setupRouter();
 
     Future.all(configFuture, routerFuture).compose(result -> {
-      JsonObject config = result.resultAt(VertxConstants.ZERO);
-      Router router = result.resultAt(VertxConstants.ONE);
+      JsonObject config = result.resultAt(ZERO);
+      Router router = result.resultAt(ONE);
       return VerticleDeployer.deployVerticle(vertx, router, config);
     }).onSuccess(v -> startPromise.complete())
       .onFailure(startPromise::fail);
