@@ -55,7 +55,11 @@
       <artifactId>jackson-core</artifactId>
       <version>2.18.3</version>
     </dependency>
-
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-pg-client</artifactId>
+      <version>4.5.13</version>
+    </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-auth-jwt</artifactId>
@@ -94,7 +98,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler-plugin.version}</version>
+        <version>3.8.1</version>
         <configuration>
           <release>17</release>
         </configuration>
@@ -137,20 +141,6 @@
           <mainClass>com.taskManagerBackend.backend.MainApp</mainClass>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>${exec-maven-plugin.version}</version>
-        <configuration>
-          <mainClass>${launcher.class}</mainClass>
-          <arguments>
-            <argument>run</argument>
-            <argument>${main.verticle}</argument>
-          </arguments>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
-
-
 </project>
